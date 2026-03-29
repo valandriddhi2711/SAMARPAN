@@ -1,0 +1,8 @@
+{% extends 'admin_base.html' %}
+
+{% block main %}
+  <div class="container">
+    <h1 class="text-white">Welcome, {{ request.user.username }}</h1>
+    <p class="text-light">This is your donor dashboard.</p>
+  </div>
+{% endblock %}

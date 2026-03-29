@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Read More — Samarpan</title>
+  <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Optional: include your navbar here by using an include or base template -->
+  <div class="container my-5">
+    <h1 class="text-danger">Reduce Wastage of Needy Items</h1>
+
+    <p class="lead text-success">
+      Help others without any reason and give without the expectation of receiving anything in return.
+      Always give without remembering and always receive without forgetting.
+    </p>
+
+    <h4>Why this matters</h4>
+    <ul>
+      <li><strong>Social impact:</strong> Fulfills immediate needs for those who cannot afford essentials.</li>
+      <li><strong>Environmental impact:</strong> Keeps useful items out of landfills.</li>
+      <li><strong>Economic value:</strong> Extends the life of goods and reduces unnecessary purchases.</li>
+    </ul>
+
+    <h4>What you can donate</h4>
+    <ul style="color: #007bff;">
+      <li>Clothes</li>
+      <li>Footwear</li>
+      <li>Books</li>
+      <li>Toys</li>
+      <li>Furniture</li>
+      <li>Vessels</li>
+  </ul>
+  
+    <h4>How Samarpan handles donations</h4>
+    <ol>
+      <li><strong>Collection:</strong> Scheduled pickups and drop-off centers.</li>
+      <li><strong>Processing:</strong> Inspection, cleaning, and minor repairs.</li>
+      <li><strong>Distribution:</strong> Shared with verified NGOs, shelters, and community programs based on need.</li>
+    </ol>
+
+    <h4>Donor checklist</h4>
+    <ul>
+      <li>Wash or clean clothes before donating.</li>
+      <li>Pack items by category and label sizes where applicable.</li>
+      <li>Do not donate expired or open food packages.</li>
+      <li>Include a short note if an item has special instructions.</li>
+    </ul>
+
+    <div class="mt-4">
+      <a href="/" class="btn btn-secondary">Back to Home</a>
+      <a href="{% url 'donate_now' %}" class="btn btn-primary ml-2">Donate Now</a>
+    </div>
+
+    <hr>
+    <p class="small text-muted mt-4">Want this content condensed into a popup on the homepage or turned into a printable flyer? I can help implement it.</p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
