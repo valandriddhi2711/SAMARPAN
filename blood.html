@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Donation - Samarpan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #c31432, #240b36);
+            color: white;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .blood-img {
+            margin-top: 40px;
+        }
+
+        .blood-img img {
+            width: 60%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: white;
+            color: #c31432;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Blood Donation</h1>
+
+    <p>
+        Blood donation is a voluntary act of giving blood to help patients
+        in need. A single blood donation can save up to three lives.
+        Blood is essential for surgeries, accident victims,
+        cancer treatment, and many medical emergencies.
+    </p>
+
+    <div class="blood-img">
+    <a href="{% url 'blood_register' %}">
+        <img src="{% static 'images/blood_donation.jpg' %}" alt="Blood Donation">
+    </a>
+</div>
+
+    <a href="{% url 'home' %}" class="btn">Back to Home</a>
+</div>
+
+</body>
+</html>

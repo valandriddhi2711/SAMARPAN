@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Samarpan - Organ Donation</title>
+    <link rel="icon" href="{% static 'images/donation.jpg' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #ff2f6d, #6a5acd);
+        }
+
+        .container {
+            width: 90%;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .menu a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #666;
+        }
+
+        .login-btn {
+            background: #ff2f6d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .hero-text {
+            width: 45%;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+        }
+
+        .btn {
+            background: #6a5acd;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+        }
+
+        .hero-img {
+            width: 50%;
+        }
+
+        .hero-img img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="navbar">
+        <div class="logo">Samarpan</div>
+
+
+    <div class="menu">
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'products' %}">Organ List</a>
+    <a href="{% url 'add_service' %}">Donation Services</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'logino' %}" class="login-btn">Log In</a>
+    </div>
+    </div>
+
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Organ<br>Donation</h1>
+            <p>
+                Donate life. Become a hero. Organ donation can save multiple lives.
+            </p>
+            <a href="{% url 'read' %}" class="btn">Read More</a>
+        </div>
+
+        <div class="hero-img">
+            <img src="{% static 'images/big_organtransplant.jpg' %}" alt="organ">    
+            </div>
+    </div>
+
+</div>
+
+</body>
+</html>

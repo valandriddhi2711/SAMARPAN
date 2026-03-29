@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organ Donation - Read More</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #b30000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #b30000;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #b30000;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #800000;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #222;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Organ Donation</h1>
+    <p>Give the Gift of Life</p>
+</header>
+
+<section>
+    <h2>What is Organ Donation?</h2>
+    <p>
+        Organ donation is the process of giving an organ or tissue to help someone who needs a transplant.
+        Donated organs can save lives and improve the quality of life for people with serious medical conditions.
+    </p>
+</section>
+
+<section>
+    <h2>Why is Organ Donation Important?</h2>
+    <p>
+        Thousands of people around the world are waiting for life-saving organ transplants.
+        A single donor can save multiple lives by donating organs such as the heart, kidneys, liver, lungs, and pancreas.
+    </p>
+</section>
+
+<section>
+    <h2>Who Can Donate?</h2>
+    <p>
+        People of all ages and backgrounds can potentially become organ donors.
+        Medical professionals evaluate each donor individually to determine suitability.
+    </p>
+</section>
+
+<section>
+    <h2>How to Become an Organ Donor</h2>
+    <p>
+        You can register as an organ donor through your country's official health department website.
+        Inform your family about your decision so they can support your wishes.
+    </p>
+    <br>
+    <a href="{% url 'register' %}" class="btn">Register Now</a>
+</section>
+
+<footer>
+    <p>&copy; 2026 Organ Donation </p>
+</footer>
+
+</body>
+</html>

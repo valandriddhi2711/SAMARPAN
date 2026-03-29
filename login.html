@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | Samarpan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+       body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        linear-gradient(rgba(44,30,95,0.75), rgba(106,90,205,0.75)),
+        url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    overflow:hidden;
+}
+
+/* Optional soft glow effect */
+body::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle at 20% 80%, rgba(63,43,150,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(142,45,226,0.4) 0%, transparent 50%);
+    z-index:0;
+}
+
+        .login-container{
+            position:relative;
+            z-index:1;
+            width:350px;
+            padding:40px 30px;
+            border-radius:20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border:1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            text-align:center;
+            color:white;
+        }
+
+        .login-container h2{
+            margin-bottom:25px;
+            font-weight:600;
+        }
+
+        .input-box{
+            position:relative;
+            margin-bottom:20px;
+        }
+
+        .input-box input{
+            width:100%;
+            padding:12px 40px 12px 15px;
+            border-radius:30px;
+            border:none;
+            outline:none;
+            background:rgba(255,255,255,0.2);
+            color:white;
+        }
+
+        .input-box input::placeholder{
+            color:#ddd;
+        }
+
+        .options{
+            display:flex;
+            justify-content:space-between;
+            font-size:12px;
+            margin-bottom:20px;
+        }
+
+        .options a{
+            color:#fff;
+            text-decoration:none;
+        }
+
+        .options a:hover{
+            text-decoration:underline;
+        }
+
+        .login-btn{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:30px;
+            background:white;
+            color:#4b2fa5;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .login-btn:hover{
+            background:#ddd;
+        }
+
+        .register-link{
+            margin-top:15px;
+            font-size:13px;
+        }
+
+        .register-link a{
+            color:#fff;
+            text-decoration:none;
+            font-weight:500;
+        }
+
+        .register-link a:hover{
+            text-decoration:underline;
+        }
+
+        .message{
+            margin-bottom:15px;
+            font-size:14px;
+            color:#ffb3b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <h2>Login</h2>
+
+    {% for message in messages %}
+        <div class="message">{{ message }}</div>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-box">
+            <input type="text" name="username" placeholder="Email ID" required>
+        </div>
+
+        <div class="input-box">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <div class="options">
+            <label><input type="checkbox"> Remember me</label>
+            <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="register-link">
+        Don't have an account?
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organ Donation | Read More</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4fff6;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar */
+        nav {
+            background: white;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+       nav h2 {
+    color: #3ec331;
+    font-weight: 700;
+}
+
+        nav a {
+            text-decoration: none;
+            margin-left: 25px;
+            color: #333;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #2e7d32;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(46,125,50,0.9), rgba(46,125,50,0.9)),
+                        url('https://images.unsplash.com/photo-1579684385127-1ef15d508118');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* Content Section */
+        .content {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .box:hover {
+            transform: translateY(-8px);
+        }
+
+        .box h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #2e7d32;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1b5e20;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="top-banner">
+    Become a Hero Today — Donate Organs, Save Lives
+</div>
+
+<nav>
+    <h2>Samarpan</h2>
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'more' %}">Read More</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>Give the Gift of Life</h1>
+    <p>
+        Organ donation is a powerful act of kindness that can save multiple lives
+        and give hope to families in need.
+    </p>
+</div>
+
+<div class="content">
+
+    <div class="box">
+        <h3>What is Organ Donation?</h3>
+        <p>
+            Organ donation is the process of donating organs and tissues to patients
+            suffering from organ failure. It provides a second chance at life.
+        </p>
+    </div>
+
+    <div class="box">
+        <h3>Why Donate?</h3>
+        <p>
+            Every year, thousands wait for transplants. One donor can save up to 8 lives
+            and improve many more through tissue donation.
+        </p>
+    </div>
+
+    <div class="box">
+        <h3>How to Register?</h3>
+        <p>
+            Sign up through your official health authority portal and inform your
+            family about your decision.
+        </p>
+        <a href="{% url 'register' %}" class="btn">Register Now</a>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Samarpan | Organ Donation Awareness Initiative
+</footer>
+
+</body>
+</html>
