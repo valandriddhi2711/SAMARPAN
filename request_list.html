@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blood Donor Table</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(to right,#c31432,#240b36);
+padding:40px;
+}
+
+.page-title{
+text-align:center;
+color:white;
+margin-bottom:30px;
+}
+
+.table-container{
+width:90%;
+margin:auto;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#c31432;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+background:#f5f5f5;
+}
+
+.call-btn{
+padding:6px 15px;
+color:white;
+border:none;
+border-radius:20px;
+font-size:13px;
+cursor:pointer;
+}
+
+.status{
+padding:5px 12px;
+border-radius:15px;
+color:white;
+font-size:12px;
+}
+
+.status.pending{ background:#f39c12; }
+.status.accepted{ background:#2ecc71; }
+.status.rejected{ background:#e74c3c; }
+
+.back-link{
+    text-align:center;
+    margin-top:40px;
+}
+
+.back-btn{
+    display:inline-block;
+    padding:12px 30px;
+    background:linear-gradient(135deg, #ffffff, #f1f1f1);
+    color:#c31432;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:600;
+    letter-spacing:0.5px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    transition:all 0.3s ease;
+}
+
+.back-btn:hover{
+    background:#c31432;
+    color:white;
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<h2 class="page-title">🩸 Registered Blood Donors</h2>
+
+<!-- Messages -->
+{% if messages %}
+<div style="text-align:center; margin-bottom:15px;">
+    {% for message in messages %}
+        <p style="color:white;">{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="table-container">
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Blood Group</th>
+<th>City</th>
+<th>Mobile</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for donor in donors %}
+
+<tr>
+<td>{{ donor.fullname }}</td>
+
+<td>
+{% if donor.age %}
+{{ donor.age }} years
+{% else %}
+N/A
+{% endif %}
+</td>
+
+<td>{{ donor.blood_group }}</td>
+<td>{{ donor.city }}</td>
+<td>{{ donor.mobile }}</td>
+
+<td>
+<span class="status {{ donor.status|lower }}">
+{{ donor.status }}
+</span>
+</td>
+
+<td>
+{% if donor.status == "Pending" %}
+
+<form method="POST" action="{% url 'accept_request' donor.pk %}" style="display:inline;">
+{% csrf_token %}
+<button class="call-btn" style="background:#2ecc71;">Accept</button>
+</form>
+
+<form method="POST" action="{% url 'reject_request' donor.pk %}" style="display:inline;">
+{% csrf_token %}
+<button class="call-btn" style="background:#e74c3c;">Reject</button>
+</form>
+
+{% else %}
+---
+{% endif %}
+</td>
+
+</tr>
+
+{% empty %}
+<tr>
+<td colspan="7">No donors available</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+<div class="back-link">
+    <a href="{% url 'home' %}" class="back-btn">
+        ← Back to Home
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Samarpan - Donor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#sidebarToggle').click(function () {
+        $('#sidebar').toggleClass('active');
+      });
+    });
+  </script>
+
+  <style>
+    /* KEEP YOUR BACKGROUND */
+    body {
+      background: linear-gradient(135deg, #6e00ff, #9900cc);
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    #wrapper {
+      display: flex;
+    }
+
+    /* HEADER */
+    .header-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 30px;
+      color: #fff;
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: 260px;
+      height: 100vh;
+      background: #ffffff;
+      border-radius: 0 20px 20px 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      padding: 20px 10px;
+      transition: 0.3s;
+    }
+
+    #sidebar.active {
+      margin-left: -260px;
+    }
+
+    /* PROFILE */
+    .sidebar-header {
+      text-align: center;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar-header img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid #6e00ff;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-header h6 {
+      margin: 5px 0 0;
+      font-weight: 600;
+    }
+
+    /* MENU */
+    .nav-link {
+      color: #555;
+      font-weight: 500;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin: 6px 10px;
+      transition: all 0.3s;
+    }
+
+    .nav-link i {
+      width: 20px;
+    }
+
+    /* ACTIVE + HOVER */
+    .nav-link:hover,
+    .nav-link.active {
+      background: linear-gradient(135deg, #6e00ff, #9900cc);
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(110,0,255,0.4);
+    }
+
+    /* DROPDOWN */
+    .dropdown-menu {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* BUTTON */
+    .toggle-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    /* CONTENT AREA */
+    #content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    /* CONTENT CARD STYLE */
+    .content-box {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+      color: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    /* USER ICON */
+    .user-icon {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header-bar">
+
+  <div class="d-flex align-items-center">
+    <button id="sidebarToggle" class="toggle-btn mr-3">
+      <i class="fas fa-bars"></i>
+    </button>
+    <h5 class="mb-0">Samarpan</h5>
+  </div>
+
+  <div class="d-flex align-items-center">
+    <span class="mr-3">{{ request.user.username }}</span>
+
+    <div class="dropdown">
+      <a href="#" class="text-white dropdown-toggle user-icon" data-toggle="dropdown">
+        <i class="fas fa-user-circle"></i>
+      </a>
+
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="{% url 'donor_profile' %}">Profile</a>
+        <a class="dropdown-item" href="{% url 'dsettings' %}">Settings</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="wrapper">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+
+    <div class="sidebar-header">
+
+      {% if request.user.donation_set.exists %}
+          <img src="{{ request.user.donation_set.first.userpic.url }}">
+      {% else %}
+          <img src="{% static 'images/default-user.png' %}">
+      {% endif %}
+
+      <h6>Donor</h6>
+      <small>{{ request.user.username }}</small>
+    </div>
+
+    <ul class="nav flex-column">
+
+      <li>
+        <a href="{% url 'dashboard_donation' %}" class="nav-link active">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a href="{% url 'donate_now' %}" class="nav-link">
+          <i class="fas fa-donate"></i> Donate Now
+        </a>
+      </li>
+
+      <li>
+        <a href="{% url 'donation_history' %}" class="nav-link">
+          <i class="fas fa-history"></i> Donation History
+        </a>
+      </li>
+
+      <li class="dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <i class="fas fa-cogs"></i> Services
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'add_service' %}">Add Services</a>
+          <a class="dropdown-item" href="{% url 'manage_services' %}">Manage Services</a>
+        </div>
+      </li>
+
+      <li class="dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <i class="fas fa-envelope"></i> Queries
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item">Unread</a>
+          <a class="dropdown-item">Read</a>
+        </div>
+      </li>
+
+      <li class="dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <i class="fas fa-book"></i> Booking
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'new_booking' %}">New Booking</a>
+          <a class="dropdown-item" href="{% url 'my_bookings' %}">Old Booking</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="#" class="nav-link">
+          <i class="fas fa-key"></i> Change Password
+        </a>
+      </li>
+
+      <li>
+        <a href="{% url 'logout' %}" class="nav-link text-danger">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+  <!-- CONTENT -->
+  <div id="content">
+    <div class="content-box">
+      {% block main %}
+      {% endblock %}
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+{% extends 'donor_base.html' %}
+{% load static %}
+
+{% block main %}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  const months = {{ months|default:"[]"|safe }};
+  const counts = {{ counts|default:"[]"|safe }};
+  const pending = {{ pending_donations|default:0 }};
+  const accepted = {{ accepted_donations|default:0 }};
+
+  /* LINE CHART */
+  new Chart(document.getElementById('barChart'), {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [{
+        label: 'Donations',
+        data: counts,
+        borderColor: '#ffffff',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        fill: true,
+        tension: 0.3,
+        pointBackgroundColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  /* PIE CHART */
+  new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Pending', 'Accepted'],
+      datasets: [{
+        data: [pending, accepted],
+        backgroundColor: ['#facc15', '#22c55e']
+      }]
+    }
+  });
+
+});
+</script>
+
+<style>
+/* DASHBOARD DESIGN */
+.dashboard {
+  color: white;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card-box {
+  background: rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.chart-box {
+  background: rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+</style>
+
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <h2>Welcome, {{ request.user.username }}</h2>
+  <p>Your donation overview</p>
+
+  <!-- STATS -->
+  <div class="cards">
+    <div class="card-box">
+      <h5>Total</h5>
+      <h2>{{ total_donations }}</h2>
+    </div>
+
+    <div class="card-box">
+      <h5>Pending</h5>
+      <h2>{{ pending_donations }}</h2>
+    </div>
+
+    <div class="card-box">
+      <h5>Accepted</h5>
+      <h2>{{ accepted_donations }}</h2>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts">
+    <div class="chart-box">
+      <h5>Monthly Donations</h5>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h5>Status</h5>
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <h4 class="mt-4">Recent Donations</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for d in recent_donations %}
+      <tr>
+        <td>{{ d.donationname }}</td>
+        <td>{{ d.status }}</td>
+        <td>{{ d.donationdate }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3">No donations yet</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}

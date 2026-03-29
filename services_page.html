@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donor Services</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      margin: 0;
+      background: #f4f7fe;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 40px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .service-card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card i {
+      font-size: 42px;
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .service-card p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Our Donor Services</h1>
+
+    <div class="services">
+
+      <!-- Blood Donation Card -->
+<a href="{% url 'blood' %}" class="card-link">
+    <div class="service-card">
+        <i class="fa-solid fa-droplet"></i>
+        <h3>Blood Donation</h3>
+        <p>Donate blood and help save lives in emergencies and surgeries.</p>
+    </div>
+</a>
+<a href="{% url 'emergency-support' %}" class="card-link">
+      <div class="service-card">
+        <i class="fa-solid fa-truck-medical"></i>
+        <h3>Emergency Donor Support</h3>
+        <p>Immediate donor assistance and quick hospital connections during critical situations.</p>
+      </div></a>
+
+      <div class="service-card">
+    <a href="{% url 'home' %}" class="card-link">
+        <i class="fa-solid fa-heart-circle-plus"></i>
+        <h3>Organ Donation </h3>
+        <p>Educating donors and helping them register for organ donation.</p>
+    </a>
+</div>
+      <a href="{% url 'free_health_checkup' %}" class="card-link">
+  <div class="service-card">
+    <i class="fa-solid fa-stethoscope"></i>
+    <h3>Free Health Checkup</h3>
+    <p>Basic health screening to ensure donor safety and eligibility.</p>
+  </div>
+</a>
+
+      <a href="{% url 'donor_reg' %}" class="card-link">
+    <div class="service-card">
+        <i class="fa-solid fa-user-plus"></i>
+        <h3>Donor Registration</h3>
+        <p>Easy and secure registration to become a verified donor.</p>
+    </div>
+</a>
+        <a href="{% url 'blood_history' %}" class="card-link">
+      <div class="service-card">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h3>Blood_History</h3>
+        <p>Track previous donations and get reminders for future donations.</p>
+      </div>
+</a>
+        <a href="{% url 'volunteer_register' %}" class="card-link">
+      <div class="service-card">
+        <i class="fa-solid fa-people-group"></i>
+        <h3>Volunteer Programs</h3>
+        <p>Join blood drives, awareness campaigns, and community programs.</p>
+      </div>
+    </a>
+        <a href="{% url 'add_emergency_alert' %}" class="card-link">
+      <div class="service-card">
+        <i class="fa-solid fa-bell"></i>
+        <h3>Emergency Alerts</h3>
+        <p>Receive instant alerts when donors are urgently needed.</p>
+      </div>
+    </a>
+        <a href="{% url 'hospital_partnership' %}" class="card-link">
+      <div class="service-card">
+        <i class="fa-solid fa-hospital"></i>
+        <h3>Hospital Partnerships</h3>
+        <p>Strong partnerships with hospitals for faster donor response.</p>
+      </div>
+    </a>
+
+    </div>
+  </div>
+
+</body>
+</html>

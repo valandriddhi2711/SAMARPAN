@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>About - Samarpan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f6fb;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+color:#6a5acd;
+}
+
+/* MENU */
+.menu{
+display:flex;
+gap:25px;
+align-items:center;
+}
+
+.menu a{
+text-decoration:none;
+color:#333;
+font-size:14px;
+transition:0.3s;
+}
+
+.menu a:hover{
+color:#ff416c;
+}
+
+/* LOGIN BUTTON */
+.login-btn{
+padding:8px 18px;
+background:#ff416c;
+color:white !important;
+border-radius:20px;
+}
+
+.login-btn:hover{
+background:#e11d48;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:60px 20px;
+background:linear-gradient(120deg,#667eea,#764ba2);
+color:white;
+}
+
+.hero h1{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.hero p{
+opacity:0.9;
+}
+
+/* CONTENT */
+.container{
+width:90%;
+max-width:900px;
+margin:40px auto;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.card h2{
+color:#ff416c;
+margin-bottom:10px;
+}
+
+.card p{
+color:#444;
+line-height:1.6;
+}
+
+.card ul{
+padding-left:20px;
+}
+
+.card li{
+margin-bottom:8px;
+}
+
+/* BACK BUTTON */
+.back{
+text-align:center;
+margin-top:30px;
+}
+
+.back a{
+padding:10px 25px;
+background:#6a5acd;
+color:white;
+border-radius:25px;
+text-decoration:none;
+}
+
+.back a:hover{
+background:#5848c2;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.menu{
+flex-direction:column;
+gap:10px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">🩸 Samarpan</div>
+
+    <div class="menu">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'products' %}">Organ List</a>
+        <a href="{% url 'add_service' %}">Donation Services</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="{% url 'logino' %}" class="login-btn">Log In</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<h1>🫀 Organ Donation Awareness</h1>
+<p>One donor can save multiple lives. Be a hero today.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+<div class="card">
+<h2>About Organ Donation</h2>
+<p>
+Organ donation is the process of giving healthy organs or tissues to help patients 
+suffering from organ failure. It includes heart, kidney, liver, and more.
+</p>
+</div>
+
+<div class="card">
+<h2>Key Aspects</h2>
+<ul>
+<li>Save up to 8 lives</li>
+<li>Living & deceased donation</li>
+<li>Safe and legal process</li>
+<li>High demand worldwide</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>How to Become a Donor</h2>
+<ul>
+<li>Register officially</li>
+<li>Inform your family</li>
+<li>Carry donor card</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Why Students Matter</h2>
+<p>
+Young people play a key role in spreading awareness and encouraging organ donation.
+</p>
+</div>
+
+<div class="back">
+<a href="{% url 'home' %}">← Back to Home</a>
+</div>
+
+</div>
+
+</body>
+</html>

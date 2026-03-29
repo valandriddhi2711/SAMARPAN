@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blood Donor Table</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(to right,#c31432,#240b36);
+padding:40px;
+}
+
+.page-title{
+text-align:center;
+color:white;
+margin-bottom:30px;
+}
+
+.table-container{
+width:90%;
+margin:auto;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#c31432;
+color:white;
+padding:12px;
+font-weight:600;
+}
+
+td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+background:#f5f5f5;
+}
+
+.call-btn{
+padding:6px 15px;
+background:#c31432;
+color:white;
+text-decoration:none;
+border-radius:20px;
+font-size:13px;
+}
+
+.call-btn:hover{
+background:#8e0e1a;
+}
+
+.no-data{
+text-align:center;
+padding:20px;
+}
+
+.back-link{
+text-align:center;
+margin-top:30px;
+}
+
+.back-link a{
+padding:10px 25px;
+background:white;
+color:#c31432;
+text-decoration:none;
+border-radius:25px;
+font-weight:500;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2 class="page-title">🩸 Registered Blood Donors</h2>
+
+<div class="table-container">
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Age</th> 
+<th>Blood Group</th>
+<th>City</th>
+<th>Mobile</th>
+<th>Action</th>
+</tr>
+
+{% for donor in donors %}
+
+<tr>
+<td>{{ donor.fullname }}</td>
+
+<td>
+    {% if donor.age %}
+        {{ donor.age }} years
+    {% else %}
+        N/A
+    {% endif %}
+</td>
+
+<td>{{ donor.blood_group }}</td>
+<td>{{ donor.city }}</td>
+<td>{{ donor.mobile }}</td>
+
+<td>
+
+<a href="{% url 'donor_detail' donor.pk %}" class="call-btn" style="background:#3498db;">
+View
+</a>
+
+<form method="POST" action="{% url 'request_blood' donor.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="call-btn">
+        Request
+    </button>
+</form>
+
+</td>
+
+</tr>
+
+{% endfor %}
+</table>
+
+</div>
+
+<div class="back-link">
+<a href="{% url 'home' %}">← Back to Home</a>
+</div>
+
+</body>
+</html>

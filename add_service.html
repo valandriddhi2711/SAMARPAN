@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Service</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(120deg,#f093fb,#f5576c);
+}
+
+/* Main Card */
+.container{
+width:100%;
+max-width:500px;
+background:#ffffff;
+padding:35px 30px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Title */
+h2{
+text-align:center;
+margin-bottom:25px;
+color:#333;
+font-weight:600;
+}
+
+/* Form */
+form{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+/* Input Group */
+.input-group{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+label{
+font-size:13px;
+color:#555;
+}
+
+/* Inputs */
+input, textarea, select{
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:14px;
+transition:0.3s;
+outline:none;
+}
+
+input:focus, textarea:focus, select:focus{
+border-color:#f5576c;
+box-shadow:0 0 0 3px rgba(245,87,108,0.15);
+}
+
+/* Button */
+button{
+margin-top:10px;
+padding:13px;
+background:linear-gradient(120deg,#f093fb,#f5576c);
+color:white;
+border:none;
+border-radius:10px;
+font-size:15px;
+font-weight:500;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Image Preview */
+.preview{
+text-align:center;
+}
+
+.preview img{
+max-width:100%;
+height:140px;
+border-radius:12px;
+margin-top:10px;
+display:none;
+object-fit:cover;
+}
+
+/* Back Button */
+.back{
+text-align:center;
+margin-top:20px;
+}
+
+.back a{
+text-decoration:none;
+color:#f5576c;
+font-weight:500;
+transition:0.3s;
+}
+
+.back a:hover{
+text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>✨ Add New Service</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="input-group">
+<label>Select Service</label>
+<select name="title" required>
+<option value="">Choose Service</option>
+<option>Blood Donation</option>
+<option>Emergency Donor Support</option>
+<option>Organ Donation</option>
+<option>Free Health Checkup</option>
+<option>Donor Registration</option>
+<option>Volunteer Programs</option>
+<option>Emergency Alerts</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>Description</label>
+<textarea name="description" rows="4" placeholder="Enter description..." required></textarea>
+</div>
+
+<!-- <div class="input-group">
+<label>Icon Class</label>
+<input type="text" name="icon" placeholder="fa-solid fa-droplet">
+</div> -->
+
+<div class="input-group">
+<label>Upload Image</label>
+<input type="file" name="image" accept="image/*" onchange="previewImage(event)">
+</div>
+
+<div class="preview">
+<img id="imagePreview">
+</div>
+
+<button type="submit">Add Service</button>
+
+</form>
+
+<div class="back">
+<a href="{% url 'home' %}">← Back to Home</a>
+</div>
+
+</div>
+
+<script>
+function previewImage(event){
+const reader = new FileReader();
+const image = document.getElementById('imagePreview');
+
+reader.onload = function(){
+image.src = reader.result;
+image.style.display = "block";
+}
+
+reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+</body>
+</html>
