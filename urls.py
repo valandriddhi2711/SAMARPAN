@@ -47,7 +47,8 @@ urlpatterns = [
     path("donor_login/",donor_login, name="donor_login"),
     path('donor_home/', donor_home, name='donor_home'),
     path('admin_home/', admin_home, name='admin_home'),
-    path('logout/', logout, name='logout'),
+    path('logout/', logout_view, name='logout'),
+    path('ulogout/', user_logout, name='ulogout'),
     path('donate_now/', donate_now, name='donate_now'),
     path('donation_history/', donation_history, name='donation_history'),
     path('pending_donation/', pending_donation, name='pending_donation'),
@@ -91,8 +92,62 @@ urlpatterns = [
     path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
     path('dsettings/', dsettings, name='dsettings'),
     path('update-settings/', update_settings, name='update_settings'),
+    path('chatbot/', chatbot_page, name='chatbot'),
+    path('chatbot-response/', chatbot_response, name='chatbot_response'),
+    path('send-otp/', send_otp, name='send_otp'),
+    path('verify-otp/', verify_otp, name='verify_otp'),
+    path('transplant-dashboard/', transplant_dashboard, name='transplant_dashboard'),
+    path("organ-data/", organ_csv_view, name="organ_csv"),
+    path('home/', home, name='home'),
+    path('products/', products, name='products'),
+    path('service/', service, name='service'),
+    path('contact/', contact, name='contact'),
+    path('login/', login_page, name='login'),
+    path('blood/', blood, name='blood'),
+    path('read/', read_moreo, name='read'),
+    path('more/', more, name='more'),
+    path('register/', register_view, name='register'),
+    path('logino/', login_view, name='logino'),
+    path('logouto/', logout_view, name='logouto'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('blood-register/', blood_register, name='blood_register'),
+    path('blood-donation/', blood_donation, name='blood_donation'),
 
+    path('free-health-checkup/', free_health_checkup, name='free_health_checkup'),
+    path('success/', success, name='success'),
+    path('kidney-donor/', kidney_donor_register, name='kidney_donor'),
+path('kidney-patient/', kidney_patient_register, name='kidney_patient'),
+# Liver
+path('liver-donor/', liver_donor_register, name='liver-donor'),
+path('liver-patient/', liver_patient_register, name='liver-patient'),
 
+# Heart
+path('heart-donor/', heart_donor_register, name='heart-donor'),
+path('heart-patient/', heart_patient_register, name='heart-patient'),
+
+# Eye
+path('eye-donor/', eye_donor_register, name='eye-donor'),
+path('eye-patient/', eye_patient_register, name='eye-patient'),
+
+# Lung
+path('lung-donor/', lung_donor_register, name='lung-donor'),
+path('lung-patient/', lung_patient_register, name='lung-patient'),
+
+# Pancreas
+path('pancreas-donor/', pancreas_donor_register, name='pancreas-donor'),
+path('pancreas-patient/', pancreas_patient_register, name='pancreas-patient'),
+path('emergency-support/', emergency_support, name='emergency-support'),
+path('volunteer-register/', volunteer_register, name='volunteer_register'),
+path('emergency-alerts/', emergency_alerts, name='emergency_alerts'),
+path('add-emergency-alert/', add_emergency_alert, name='add_emergency_alert'),
+path('history/', blood_history, name='blood_history'),
+path('hospital_partnership/', hospital_partnership, name='hospital_partnership'),
+path('all-services-data/', all_services_data, name='all_services_data'),
+path('request/<int:donor_id>/', request_blood, name='request_blood'),
+path('donor/<int:pk>/', donor_detail, name='donor_detail'),
+path('requests/', request_list, name='request_list'),
+path('accept/<int:request_id>/', accept_request, name='accept_request'),
+path('reject/<int:request_id>/', reject_request, name='reject_request'),
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
