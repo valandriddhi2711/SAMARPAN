@@ -1,16 +1,34 @@
 # from django.shortcuts import render
 from urllib import request
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from.models import *
 from datetime import date
+import pandas as pd
+import os
+from django.db.models import Q
 import traceback
+from .models import OrganTransplant
+import random
+from django.core.mail import send_mail
+from .models import EmergencyAlert
+from .models import EmailOTP
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.db.models.functions import TruncMonth
+from .models import KidneyDonor, KidneyPatient
 from .models import Service
+import json 
 from .models import Booking
+from django.contrib.auth import login
+import openai
+from .models import HealthCheckup
+from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import render
 from django.db.models import Sum,Count, Avg
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout 
@@ -170,9 +188,11 @@ def donor_reg(request):
     return render(request, "donor_reg.html", {"error": error})
 
 def donor_home(request):
-    # if not request.user.is_authenticated:
-        # return redirect('donor_login')
-    return render(request,'donor_home.html')
+    if not request.user.is_authenticated:
+        return redirect('donor_login')
+
+    # ✅ Direct redirect to dashboard
+    return redirect('dashboard_donation')
 
 def donate_now(request):
     if not request.user.is_authenticated:
@@ -208,7 +228,7 @@ def donate_now(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('donor_login')
 
 def donation_history(request):
     if not request.user.is_authenticated:
@@ -733,6 +753,11 @@ def profile_volunteer(request):
         'volunteer': volunteer
     })
 
+# from django.shortcuts import render, redirect
+# from django.db.models import Count
+# from django.db.models.functions import TruncMonth
+# import json   # ✅ IMPORTANT
+
 def dashboard_donation(request):
     if not request.user.is_authenticated:
         return redirect('donor_login')
@@ -744,14 +769,14 @@ def dashboard_donation(request):
 
     donations = Donation.objects.filter(donor=donor)
 
-    # 📊 Monthly data for BAR chart
+    # 📊 Monthly Data
     monthly_data = (
-    donations
-    .annotate(month=TruncMonth('donationdate'))  # ✅ fixed
-    .values('month')
-    .annotate(total=Count('id'))
-    .order_by('month')
-)
+        donations
+        .annotate(month=TruncMonth('donationdate'))
+        .values('month')
+        .annotate(total=Count('id'))
+        .order_by('month')
+    )
 
     months = [d['month'].strftime('%b %Y') for d in monthly_data if d['month']]
     counts = [d['total'] for d in monthly_data]
@@ -761,8 +786,10 @@ def dashboard_donation(request):
         "pending_donations": donations.filter(status="pending").count(),
         "accepted_donations": donations.filter(status="accept").count(),
         "recent_donations": donations.order_by("-id")[:5],
-        "months": months,     # ✅ REQUIRED for bar graph
-        "counts": counts,     # ✅ REQUIRED for bar graph
+
+        # ✅ CONVERT TO JSON (VERY IMPORTANT)
+        "months": json.dumps(months),
+        "counts": json.dumps(counts),
     }
 
     return render(request, "dashboard_donation.html", context)
@@ -1085,3 +1112,672 @@ def update_settings(request):
 
     # If GET request, just redirect to settings
     return redirect('settings')
+
+
+
+
+openai.api_key = settings.OPENAI_API_KEY
+
+
+def chatbot_page(request):
+    return render(request, 'chatbot.html')
+
+
+def chatbot_response(request):
+    message = request.GET.get('message', '').lower()
+
+    # Greeting
+    if any(word in message for word in ["hello", "hi", "hey"]):
+        reply = "Hello 👋 Welcome to Samarpan Donation Management System! How can I help you?"
+
+    # About project
+    elif "samarpan" in message or "about" in message:
+        reply = "Samarpan is a Donation Management System that connects donors, volunteers, and needy people."
+
+    # Donation process
+    elif "how to donate" in message or "donation process" in message:
+        reply = "To donate, go to the Donation page, fill the form, submit item details, and our volunteer will collect it."
+
+    elif "donation" in message:
+        reply = "You can donate clothes, books, food, and other usable items through the donation section."
+
+    # Volunteer
+    elif "volunteer" in message:
+        reply = "You can register as a volunteer from the Volunteer Registration page and help manage donations."
+
+    # Login/Register
+    elif "login" in message:
+        reply = "Click on the Login button in the navbar and enter your credentials."
+
+    elif "register" in message:
+        reply = "You can register as a Donor or Volunteer from the Registration page."
+
+    # Contact
+    elif "contact" in message:
+        reply = "You can contact us through the Contact page for any support."
+
+    # Admin
+    elif "admin" in message:
+        reply = "Admin manages users, donations, approvals, and overall system operations."
+
+    # Thanks
+    elif "thank" in message:
+        reply = "You're welcome 😊 Happy to help!"
+
+    # Exit
+    elif "bye" in message:
+        reply = "Goodbye! Have a wonderful day 🌟"
+
+    else:
+        reply = "Sorry 😔 I didn't understand that. Please ask about donation, volunteer, login, or contact."
+
+    return JsonResponse({'response': reply})
+
+
+
+
+
+
+# def send_otp(request):
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+#         print("Email entered:", email)
+
+#         if not email:
+#             return render(request, "send_otp.html", {
+#                 "error": "Please enter email"
+#             })
+
+#         try:
+#             user = User.objects.get(email=email)
+#         except User.DoesNotExist:
+#             return render(request, "send_otp.html", {
+#                 "error": "Email is not registered!"
+#             })
+
+#         otp = str(random.randint(100000, 999999))
+#         print("Generated OTP:", otp)
+
+#         EmailOTP.objects.update_or_create(
+#             user=user,
+#             defaults={"otp": otp}
+#         )
+
+#         request.session['email'] = email
+
+#         return redirect("verify_otp")
+
+#     return render(request, "send_otp.html")
+
+
+# def verify_otp(request):
+#     if request.method == "POST":
+#         entered_otp = request.POST.get("otp")
+#         email = request.session.get("email")
+
+#         try:
+#             user = User.objects.get(email=email)
+#             otp_record = EmailOTP.objects.get(user=user)
+
+#             if otp_record.is_expired():
+#                 otp_record.delete()
+#                 return render(request, "verify_otp.html", {
+#                     "error": "OTP has expired!"
+#                 })
+
+#             if entered_otp == otp_record.otp:
+#                 otp_record.delete()  # Delete after success
+#                 return redirect("index")
+#             else:
+#                 return render(request, "verify_otp.html", {
+#                     "error": "Invalid OTP"
+#                 })
+
+#         except:
+#             return render(request, "verify_otp.html", {
+#                 "error": "Something went wrong"
+#             })
+
+#     return render(request, "verify_otp.html")
+
+# from django.shortcuts import render, redirect
+# from django.contrib.auth.models import User
+# from .models import EmailOTP
+# from django.core.mail import send_mail
+# from django.conf import settings
+# from django.db.models import Q
+
+def send_otp(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip().lower()
+
+        try:
+            # Allow email OR username
+            user = User.objects.get(Q(email__iexact=email) | Q(username__iexact=email))
+        except User.DoesNotExist:
+            return render(request, "send_otp.html", {"error": "Email is not registered!"})
+
+        # Create OTP automatically
+        otp_obj, created = EmailOTP.objects.get_or_create(user=user)
+        otp_obj.save()  # auto-generates OTP
+
+        # Send OTP by email
+        send_mail(
+            "Your OTP Code",
+            f"Your OTP is {otp_obj.otp}",
+            settings.EMAIL_HOST_USER,
+            [user.email],
+            fail_silently=False,
+        )
+
+        # Save user id in session for verification
+        request.session['otp_user_id'] = user.id
+
+        return redirect("verify_otp")
+
+    return render(request, "send_otp.html")
+
+
+def verify_otp(request):
+    if request.method == "POST":
+        entered_otp = request.POST.get("otp", "").strip()
+        user_id = request.session.get("otp_user_id")
+
+        if not user_id:
+            return redirect("send_otp")
+
+        try:
+            user = User.objects.get(id=user_id)
+            otp_record = EmailOTP.objects.get(user=user)
+
+            if otp_record.is_expired():
+                otp_record.delete()
+                return render(request, "otp.html", {"error": "OTP expired!"})
+
+            if entered_otp == otp_record.otp:
+                otp_record.delete()  # OTP used
+                return redirect("index")  # verified successfully
+
+            else:
+                return render(request, "otp.html", {"error": "Invalid OTP"})
+
+        except EmailOTP.DoesNotExist:
+            return render(request, "otp.html", {"error": "No OTP found"})
+
+    return render(request, "otp.html")
+
+
+def transplant_dashboard(request):
+    data = OrganTransplant.objects.all()
+    return render(request, "transplant_dashboard.html", {"data": data})
+#
+# from django.conf import settings
+# from django.shortcuts import render
+
+def organ_csv_view(request):
+    file_path = os.path.join(settings.BASE_DIR, "organ_data.csv")
+    df = pd.read_csv(file_path)
+    data = df.to_dict(orient="records")
+    return render(request, "organ_csv.html", {"data": data})
+
+def home(request):
+    return render(request, 'home.html')
+def about(request):
+    return render(request, 'Oabout.html')
+
+def products(request):
+    return render(request, 'Oproducts.html')
+
+def service(request):
+    return render(request, 'Oservice.html')
+
+def contact(request):
+    return render(request, 'Ocontact.html')
+
+def login_page(request):
+    return render(request, 'Ologin.html')
+def blood(request):
+    return render(request, 'blood.html')
+def read_moreo(request):
+    return render(request, 'read_moreO.html')
+def more(request):
+    return render(request, 'more.html')
+
+# Register View
+def register_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists")
+            return redirect('register')
+
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        messages.success(request, "Registration Successful")
+        return redirect('login')
+
+    return render(request, 'register.html')
+
+
+# Login View
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Invalid Username or Password")
+    return render(request, 'login.html')
+
+
+# Dashboard
+def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'dashboard.html')
+
+
+# def logout_view(request):
+#     logout(request)
+#     return redirect('login')   # after logout go to login page
+
+
+
+def free_health_checkup(request):
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        age = request.POST.get('age')
+        checkup_type = request.POST.get('checkup_type')
+
+        HealthCheckup.objects.create(
+            name=name,
+            email=email,
+            phone=phone,
+            age=age,
+            checkup_type=checkup_type
+        )
+
+        return redirect('success')
+
+    return render(request, 'free_health_checkup.html')
+
+
+def success(request):
+    return render(request, 'success.html')
+
+
+
+
+def kidney_donor_register(request):
+
+    if request.method == "POST":
+
+        user = request.user
+        age = request.POST.get('age')
+        blood_group = request.POST.get('blood_group')
+        contact = request.POST.get('contact')
+        address = request.POST.get('address')
+
+        KidneyDonor.objects.create(
+            user=user,
+            age=age,
+            blood_group=blood_group,
+            contact=contact,
+            address=address
+        )
+
+        return redirect('kidney_patient')
+
+    return render(request, 'kidney_donor.html')
+
+
+def kidney_patient_register(request):
+
+    if request.method == "POST":
+
+        user_id = request.POST.get('user')
+        user = User.objects.get(id=user_id)
+
+        name = request.POST.get('name')
+        age = request.POST.get('age')
+        blood_group = request.POST.get('blood_group')
+        hospital = request.POST.get('hospital')
+        doctor = request.POST.get('doctor')
+        contact = request.POST.get('contact')
+        address = request.POST.get('address')
+
+        KidneyPatient.objects.create(
+            user=user,
+            name=name,
+            age=age,
+            blood_group=blood_group,
+            hospital=hospital,
+            doctor=doctor,
+            contact=contact,
+            address=address
+        )
+
+        return redirect('/')
+
+    users = User.objects.all()
+    return render(request,'kidney_patient.html',{'users':users})
+# -------- LIVER --------
+
+def liver_donor_register(request):
+    if request.method == "POST":
+        return redirect('liver-patient')
+    users = User.objects.all()
+    return render(request, "liver_donor.html", {"users": users})
+
+
+def liver_patient_register(request):
+    if request.method == "POST":
+        return redirect('/')
+    users = User.objects.all()
+    return render(request, "liver_patient.html", {"users": users})
+
+
+# -------- HEART --------
+
+def heart_donor_register(request):
+    if request.method == "POST":
+        return redirect('heart-patient')
+    users = User.objects.all()
+    return render(request, "heart_donor.html")
+
+
+def heart_patient_register(request):
+    return render(request, "heart_patient.html")
+
+
+# -------- EYE --------
+
+def eye_donor_register(request):
+     if request.method == "POST":
+        return redirect('eye-patient')
+     users = User.objects.all()
+     return render(request, "eye_donor.html")
+
+
+def eye_patient_register(request):
+    return render(request, "eye_patient.html")
+
+
+# -------- LUNG --------
+
+def lung_donor_register(request):
+     if request.method == "POST":
+        return redirect('lung-patient')
+     users = User.objects.all()
+     return render(request, "lung_donor.html")
+
+
+def lung_patient_register(request):
+    return render(request, "lung_patient.html")
+
+
+# -------- PANCREAS --------
+
+def pancreas_donor_register(request):
+     if request.method == "POST":
+        return redirect('pancreas-patient')
+     users = User.objects.all()
+     return render(request, "pancreas_donor.html")
+
+
+def pancreas_patient_register(request):
+    return render(request, "pancreas_patient.html")
+
+def emergency_support(request):
+
+    if request.method == "POST":
+        patient_name = request.POST['patient_name']
+        organ = request.POST['organ']
+        blood_group = request.POST['blood_group']
+        hospital = request.POST['hospital']
+        contact = request.POST['contact']
+        details = request.POST['details']
+
+        EmergencyRequest.objects.create(
+            patient_name=patient_name,
+            organ=organ,
+            blood_group=blood_group,
+            hospital=hospital,
+            contact=contact,
+            details=details
+        )
+
+        return redirect('/')
+
+    return render(request, 'emergency_support.html')
+
+from django.shortcuts import render, redirect
+from .models import Volunteer
+from django.contrib.auth.models import User
+
+def volunteer_register(request):
+    if request.method == "POST":
+        contact = request.POST.get('contact')
+        address = request.POST.get('address')
+        aboutme = request.POST.get('aboutme')
+        userpic = request.FILES.get('userpic')
+        idpic = request.FILES.get('idpic')
+
+        Volunteer.objects.create(
+            user=request.user,
+            contact=contact,
+            address=address,
+            aboutme=aboutme,
+            userpic=userpic,
+            idpic=idpic,
+            status="Pending"
+        )
+
+        return redirect('volunteer_success')
+
+    return render(request, 'volunteer_register.html')
+def emergency_alerts(request):
+    alerts = EmergencyAlert.objects.all().order_by('-created_date')
+    return render(request, 'emergency_alerts.html', {'alerts': alerts})
+
+
+def add_emergency_alert(request):
+    if request.method == "POST":
+        patient_name = request.POST.get('patient_name')
+        organ_needed = request.POST.get('organ_needed')
+        hospital = request.POST.get('hospital')
+        contact_number = request.POST.get('contact_number')
+        description = request.POST.get('description')
+        location = request.POST.get('location')
+
+        EmergencyAlert.objects.create(
+            patient_name=patient_name,
+            organ_needed=organ_needed,
+            hospital=hospital,
+            contact_number=contact_number,
+            description=description,
+            location=location
+        )
+
+        return redirect('emergency_alerts')
+
+    return render(request, 'add_emergency_alert.html')
+
+
+def blood_register(request):
+
+    if request.method == "POST":
+        fullname = request.POST.get('fullname')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        blood_group = request.POST.get('blood_group')
+        city = request.POST.get('city')
+        age = request.POST.get('age')
+        address = request.POST.get('address')
+
+        BloodDonor.objects.create(
+            fullname=fullname,
+            email=email,
+            mobile=mobile,
+            blood_group=blood_group,
+            city=city,
+            age=age,
+            address=address
+        )
+
+        messages.success(request, "Blood Donation Registration Successful!")
+
+        return redirect('blood_donation')
+    # return redirect('blood_history')
+
+    return render(request, 'blood_register.html')
+
+
+def blood_donation(request):
+
+    donors = BloodDonor.objects.all()
+
+    return render(request, 'blood_donation.html', {'donors': donors})
+
+
+
+def blood_history(request):
+    donors = BloodDonor.objects.all()
+    return render(request, 'history.html', {'donors': donors})
+
+def donor_detail(request, pk):
+    donor = get_object_or_404(Donor, pk=pk)
+    return render(request, 'donor_detail.html', {'donor': donor})
+
+def request_blood(request, donor_id):
+    donor = get_object_or_404(Donor, pk=donor_id)
+
+    if request.method == "POST":
+        # ✅ Correct name access
+        print(f"Blood request sent to {donor.user.username}")
+
+        # ✅ Optional success message
+        messages.success(request, "Blood request sent successfully!")
+
+        return redirect('donor_list')   # change if needed
+
+    return redirect('donor_list')
+
+def hospital_partnership(request):
+    hospitals = Hospital.objects.all()
+    return render(request,'hospital_partnerships.html',{'hospitals':hospitals})
+
+def all_services_data(request):
+
+    donors = BloodDonor.objects.all()
+    volunteers = Volunteer.objects.all()
+    alerts = EmergencyAlert.objects.all()
+    hospitals = Hospital.objects.all()
+    history = DonationHistory.objects.all()
+
+    context = {
+        'donors': donors,
+        'volunteers': volunteers,
+        'alerts': alerts,
+        'hospitals': hospitals,
+        'history': history
+    }
+
+    return render(request, 'all_services_data.html', context)
+
+# def request_list(request):
+#     donors = Donor.objects.all()
+#     return render(request, 'request_list.html', {
+#         'donors': donors
+#     })
+
+# def accept_request(request, request_id):
+#     req = get_object_or_404(PermisRequest, pk=request_id)
+#     req.status = 'Accepted'
+#     req.save()
+#     return redirect('request_list')
+
+
+# def reject_request(request, request_id):
+#     req = get_object_or_404(PermisRequest, pk=request_id)
+#     req.status = 'Rejected'
+#     req.save()
+#     return redirect('request_list')
+# def request_blood(request, donor_id):
+#     donor = get_object_or_404(Donor, pk=donor_id)
+
+#     if request.method == "POST":
+#         existing = PermisRequest.objects.filter(
+#             donor=donor,
+#             requested_by=request.user
+#         ).last()
+
+#         if not existing:
+#             PermisRequest.objects.create(
+#                 donor=donor,
+#                 requested_by=request.user
+#             )
+
+#         return redirect('request_list')   # ✅ FIXED
+
+#     return redirect('request_list')
+
+# Show all donors
+def request_list(request):
+    donors = BloodDonor.objects.all()
+    return render(request, 'request_list.html', {'donors': donors})
+
+
+# ✅ Accept Request
+def accept_request(request, pk):
+    donor = get_object_or_404(BloodDonor, pk=pk)
+
+    if request.method == "POST":
+        donor.status = "Accepted"
+        donor.save()
+
+        messages.success(request, f"{donor.fullname} accepted successfully!")
+
+    return redirect('request_list')
+
+
+# ❌ Reject Request
+def reject_request(request, pk):
+    donor = get_object_or_404(BloodDonor, pk=pk)
+
+    if request.method == "POST":
+        donor.status = "Rejected"
+        donor.save()
+
+        messages.error(request, f"{donor.fullname} rejected.")
+
+    return redirect('request_list')
+    
+def request_blood(request, donor_id):
+    donor = get_object_or_404(Donor, pk=donor_id)
+
+    if request.method == "POST":
+        # ✅ Correct name access
+        print(f"Blood request sent to {donor.user.username}")
+
+        # ✅ Optional success message
+        messages.success(request, "Blood request sent successfully!")
+
+        return redirect('request_list')   # change if needed
+
+    return redirect('request_list')
+
+def user_logout(request):
+    logout(request)
+    return redirect('login') 

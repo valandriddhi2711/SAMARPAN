@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import *
 from .models import Service
+from .models import DonationHistory
+from .models import Hospital
+
+
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -43,3 +47,11 @@ class GiftDonationAdmin(admin.ModelAdmin):
 
     def reject_donations(self, request, queryset):
         queryset.update(status='rejected')
+
+admin.site.register(DonationHistory)
+
+
+class HospitalAdmin(admin.ModelAdmin):
+    list_display = ('hospital_name','location','contact_details')
+
+admin.site.register(Hospital, HospitalAdmin)
