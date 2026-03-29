@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Samarpan - Volunteer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+  <!-- Custom CSS -->
+  <!-- <link rel="stylesheet" href="{% static 'css/sidebar.css' %}"> -->
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script> 
+    $(document).ready(function () {
+      $('#sidebarToggle').click(function () {
+        $('#sidebar,#content').toggleClass('active');
+      });
+    });
+  </script>
+  
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+ <!-- DataTables -->
+ <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+ <!-- Buttons -->
+ <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+
+ <!-- Export Dependencies -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+ <!-- DataTables CSS -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+<script>
+$(document).ready(function () {
+    $('.datatable').each(function () {
+        if (!$.fn.DataTable.isDataTable(this)) {
+            $(this).DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            });
+        }
+    });
+});
+</script>
+
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #6e00ff, #9900cc);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #wrapper {
+      display: flex;
+    }
+
+    /* Glassmorphism Sidebar */
+    #sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  height: 100vh;
+  background: #ffffff;              /* Solid white background */
+  backdrop-filter: blur(12px);      /* Fixed: "blur" instead of "blue" */
+  border: 2px solid white;          
+  transition: all 0.3s ease;
+  padding-top: 20px;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  color: #6e00ff;                    
+}
+
+#sidebar .nav-link {
+  color: #6e00ff;                    
+}
+
+#sidebar .nav-link:hover {
+  background-color: rgba(0,0,0,0.05);  
+  color: #6e00ff;  
+}
+
+#sidebar .sidebar-header h6,
+#sidebar .media-body h6,
+#sidebar .media-body small {
+  color: #6e00ff;                   
+}
+
+
+    
+
+    #sidebar.active {
+      margin-left: -250px;
+    }
+
+    #content {
+      width: 100%;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.toggle-btn:hover {
+  background: rgba(255,255,255,0.4);
+  transform: scale(1.05);
+}
+
+    .sidebar-header {
+      text-align: left;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .sidebar-header h6 {
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .sidebar-header img {
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+
+    .nav-link {
+      color: #fff;
+      font-weight: 500;
+      transition: 0.3s;
+      border-radius: 8px;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255,255,255,0.25);
+      border-radius: 8px;
+    }
+
+    .dropdown-menu {
+      background: rgba(255,255,255,0.95);
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .dropdown-item:hover {
+      background: #6e00ff;
+      color: #fff;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar-header d-flex justify-content-between align-items-center">
+    <h6 class="text-uppercase mb-0">Samarpan</h6>
+    <button id="sidebarToggle" class="toggle-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  
+
+
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h6 class="text-uppercase">Samarpan</h6>
+        <div class="media align-items-center mt-3">
+    <img src="{{ request.user.volunteer_set.all.0.userpic.url }}"  
+         width="50" height="50" class="mr-3 rounded-circle" 
+         alt="{{ request.user.username }}">
+    <div class="media-body">
+        <h6 class="mb-0">Volunteer</h6>
+        <small>{{ request.user.username }}</small>
+    </div>
+        </div>
+      </div>
+
+      <ul class="nav flex-column p-3">
+        <li class="nav-item">
+          <a href="{% url 'dashboard_volunteer' %}" class="nav-link"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'collection_req' %}" class="nav-link"><i class="fas fa-tachometer-alt mr-2"></i> Donation Collection request</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a href="{% url 'donation_history' %}" class="nav-link"><i class="fas fa-tachometer-alt mr-2"></i> Donation History</a>
+        </li> -->
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><i class="fas fa-chart-bar mr-2"></i> Collection History</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'donationrec_volunteer' %}">Donation Received</a>
+            <a class="dropdown-item" href="{% url 'donationnotrec_volunteer' %}">Donation Not Received</a>
+            <a class="dropdown-item" href="{% url 'donationdelivered_volunteer' %}">Donation Delivered</a>
+
+          </div>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><i class="fas fa-envelope mr-2"></i> Contact Us Queries</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Unread</a>
+            <a class="dropdown-item" href="#">Read</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><i class="fas fa-book mr-2"></i> Booking</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">New Booking</a>
+            <a class="dropdown-item" href="#">Old Booking</a>
+          </div>
+        </li>-->
+        <li class="nav-item"> 
+          <a href="#" class="nav-link"><i class="fas fa-cog mr-2"></i> Change Password</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link text-danger">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </li>
+        
+      </ul>
+    </nav>
+
+    <!-- User Dropdown -->
+    <div class="dropdown user-dropdown ml-auto p-3">
+      <a href="#" class="text-white dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right bg-light text-dark" aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="{% url 'profile_volunteer' %}">Profile</a>
+        <a class="dropdown-item" href="{% url 'dsettings' %}">Settings</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'index' %}">Logout</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div id="content">
+      {% block main %}
+      {% endblock %}
+    </div>
+  </div>
+</body>
+</html>

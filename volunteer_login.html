@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Volunteer Login</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Fullscreen background with overlay */
+        body.admin-bg {
+            height: 100vh;
+            width: 100%;
+            background:
+                linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                url("{% static 'images/volunteerloging.jpeg' %}") no-repeat center center;
+            background-size: cover;
+        }
+
+        /* Center wrapper */
+        .login-wrapper {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Login card – glass effect */
+        .login-card {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 16px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+            backdrop-filter: blur(8px);
+        }
+
+        /* User icon */
+        .user-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #28a745, #218838);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -80px auto 20px;
+        }
+        .user-icon i {
+            color: #fff;
+            font-size: 40px;
+        }
+
+        /* Headings */
+        .login-card h4 {
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        /* Inputs */
+        .input-group-text {
+            background-color: #f1f3f6;
+        }
+        .form-control {
+            height: 48px;
+        }
+
+        /* Button */
+        .btn-login {
+            height: 50px;
+            background: #28a745;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .btn-login:hover {
+            background: #218838;
+        }
+
+        /* Forgot Password */
+        .text-end a {
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .text-end a:hover {
+            text-decoration: underline;
+        }
+
+        /* Register link */
+        .register-link {
+            margin-top: 18px;
+            font-size: 14px;
+        }
+        .register-link a {
+            color: #0d6efd;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="admin-bg">
+
+{% include 'navigation.html' %}
+<hr class="mt-0">
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="user-icon">
+            <i class="fa fa-user"></i>
+        </div>
+
+        <h4>Volunteer Login</h4>
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Login Form -->
+        <form method="POST" action="{% url 'volunteer_login' %}">
+            {% csrf_token %}
+
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="Email ID" required>
+            </div>
+
+            <div class="input-group mb-2">
+    <span class="input-group-text">
+        <i class="fa fa-lock"></i>
+    </span>
+
+    <input type="password" name="password" id="password"
+           class="form-control" placeholder="Password" required>
+
+    <span class="input-group-text" style="cursor:pointer"
+          onclick="togglePassword()">
+        <i class="fa fa-eye" id="toggleIcon"></i>
+    </span>
+</div>
+
+            <!-- Forgot Password link -->
+            <div class="text-end mb-3">
+                <a href="{% url 'donor_forgot_password' %}">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100">Login</button>
+
+            <div class="register-link">
+                Don’t have an account? <a href="{% url 'volunteer_reg' %}">Create account »</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById("password");
+    const toggleIcon = document.getElementById("toggleIcon");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+}
+</script>
+</body>
+</html>

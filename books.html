@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books Donation - Samarpan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #134e5e, #71b280);
+            color: white;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            max-width: 800px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .books-img {
+            margin-top: 40px;
+        }
+
+        .books-img img {
+            width: 60%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: white;
+            color: #134e5e;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Books Donation</h1>
+
+    <p>
+        Books donation helps provide education and opportunities to 
+        underprivileged children and communities. 
+        Your donated books can inspire learning, creativity, and growth.
+        Donate textbooks, storybooks, notebooks, and study materials.
+    </p>
+
+    <div class="books-img">
+        <img src="{% static 'images/books_donation.jpg' %}" alt="Books Donation">
+    </div>
+
+    <a href="{% url 'home' %}" class="btn">Back to Home</a>
+
+</div>
+
+</body>
+</html>

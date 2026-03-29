@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact - Samarpan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f3d2e, #1f5c4d);
+        }
+
+        .contact-header {
+            padding: 60px 80px 20px;
+            color: white;
+            font-size: 60px;
+            font-weight: bold;
+        }
+
+        .contact-container {
+            background: #f4f4f4;
+            width: 85%;
+            margin: 0 auto 60px;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .contact-container h3 {
+            margin-bottom: 30px;
+            font-size: 22px;
+        }
+
+        .contact-container h3 span {
+            border-bottom: 4px solid #ffb703;
+            padding-bottom: 5px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            outline: none;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        .submit-btn {
+            background: #1f5c4d;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #144236;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #1f5c4d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .contact-header {
+                font-size: 40px;
+                padding: 40px 30px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contact-header">Contact</div>
+
+    <div class="contact-container">
+        <h3><span>Let’s hear from you</span></h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Enter Email Address" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone No.</label>
+                    <input type="text" name="phone" placeholder="Phone">
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option>Select Category</option>
+                        <option>Organ Donation Inquiry</option>
+                        <option>Volunteer Support</option>
+                        <option>General Question</option>
+                        <option>Emergency Help</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" placeholder="Write something here" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">SEND MESSAGE</button>
+        </form>
+
+        <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+    </div>
+
+</body>
+</html>

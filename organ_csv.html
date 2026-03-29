@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organ Transplant Data</title>
+</head>
+<body>
+
+<h2>Organ Transplant Data</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Year</th>
+        <th>State</th>
+        <th>Transplants</th>
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        <td>{{ row.Year }}</td>
+        <td>{{ row.State }}</td>
+        <td>{{ row.Transplants }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
