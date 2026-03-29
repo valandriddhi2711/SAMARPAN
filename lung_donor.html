@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lung Donor Registration</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    background:#f4f6f9;
+}
+
+/* Top Header */
+.header{
+    background:#2f6f5e;
+    padding:25px;
+    color:white;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* Card Design */
+.form-card{
+    margin-top:60px;
+    border-radius:20px;
+    box-shadow:0px 6px 20px rgba(0,0,0,0.15);
+}
+
+.card-header{
+    background:#2f6f5e;
+    color:white;
+    text-align:center;
+    font-size:22px;
+    border-radius:20px 20px 0 0;
+}
+
+.btn-register{
+    background:#2f6f5e;
+    border:none;
+    width:100%;
+    font-size:18px;
+}
+
+.btn-register:hover{
+    background:#245747;
+}
+
+/* back button */
+.back-link{
+    text-align:center;
+    margin-top:25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+Lung Donation Registration
+</div>
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card form-card">
+
+<div class="card-header">
+Register as Lung Donor
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="mb-3">
+<label class="form-label">User</label>
+<select name="user" class="form-select">
+{% for u in users %}
+<option value="{{u.id}}">{{u.username}}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Age</label>
+<input type="number" name="age" class="form-control" placeholder="Enter Age">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Blood Group</label>
+<select name="blood_group" class="form-select">
+
+<option>Select Blood Group</option>
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+
+</select>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Contact</label>
+<input type="text" name="contact" class="form-control" placeholder="Enter Phone Number">
+</div>
+
+<div class="mb-3">
+<label class="form-label">Address</label>
+<textarea name="address" class="form-control" rows="3"></textarea>
+</div>
+
+<button type="submit" class="btn btn-register">
+Register Donor
+</button>
+
+</form>
+
+</div>
+</div>
+
+<div class="back-link">
+<a href="/" class="text-success fw-bold">← Back to Home</a>
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
+```

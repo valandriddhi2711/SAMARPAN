@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Samarpan Services</title>
+
+<style>
+
+body{
+font-family:Poppins;
+background:#f4f7fb;
+padding:40px;
+}
+
+h1{
+text-align:center;
+color:#1e293b;
+margin-bottom:40px;
+}
+
+.section{
+background:white;
+border-radius:12px;
+margin-bottom:35px;
+box-shadow:0 6px 15px rgba(0,0,0,0.1);
+overflow:hidden;
+}
+
+.section-header{
+background:linear-gradient(45deg,#c31432,#240b36);
+color:white;
+padding:15px 20px;
+font-size:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+th{
+background:#f1f5f9;
+}
+
+tr:hover{
+background:#f8fafc;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Samarpan All Services Data</h1>
+
+<!-- Blood Donation -->
+
+<div class="section">
+<div class="section-header">Blood Donation (Donor List)</div>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Blood Group</th>
+<th>City</th>
+<th>Mobile</th>
+</tr>
+
+{% for d in donors %}
+<tr>
+<td>{{ d.fullname }}</td>
+<td>{{ d.blood_group }}</td>
+<td>{{ d.city }}</td>
+<td>{{ d.mobile }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+<!-- Blood History -->
+
+<div class="section">
+<div class="section-header">Blood History (Donation History)</div>
+
+<table>
+<tr>
+<th>Donor</th>
+<th>Date</th>
+<th>Units</th>
+</tr>
+
+{% for h in history %}
+<tr>
+<td>{{ h.donor }}</td>
+<td>{{ h.donation_date }}</td>
+<td>{{ h.units }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+<!-- Volunteer Programs -->
+
+<div class="section">
+<div class="section-header">Volunteer Programs</div>
+
+<table>
+<tr>
+<th>Name</th>
+<th>City</th>
+<th>Phone</th>
+</tr>
+
+{% for v in volunteers %}
+<tr>
+<td>{{ v.name }}</td>
+<td>{{ v.city }}</td>
+<td>{{ v.phone }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+<!-- Emergency Alerts -->
+
+<div class="section">
+<div class="section-header">Emergency Alerts</div>
+
+<table>
+<tr>
+<th>Blood Group</th>
+<th>Hospital</th>
+<th>City</th>
+<th>Contact</th>
+</tr>
+
+{% for a in alerts %}
+<tr>
+<td>{{ a.blood_group }}</td>
+<td>{{ a.hospital }}</td>
+<td>{{ a.city }}</td>
+<td>{{ a.contact }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+<!-- Hospital Partnerships -->
+
+<div class="section">
+<div class="section-header">Hospital Partnerships</div>
+
+<table>
+<tr>
+<th>Hospital</th>
+<th>Location</th>
+<th>Contact</th>
+<th>Services</th>
+</tr>
+
+{% for h in hospitals %}
+<tr>
+<td>{{ h.hospital_name }}</td>
+<td>{{ h.location }}</td>
+<td>{{ h.contact_details }}</td>
+<td>{{ h.supported_services }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+</body>
+</html>

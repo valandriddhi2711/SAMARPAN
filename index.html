@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SAMARPAN</title>
+  <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+  <link rel="icon" href="{% static 'images/donation.jpg' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery and Bootstrap Bundle -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    .brand-text {
+      font-weight: bold;
+      font-size: 42px;
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      background: linear-gradient(to right, red);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-background-clip: text;
+      -moz-text-fill-color: transparent;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-item {
+      height: 600px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .carousel-item .overlay {
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{% static 'images/donation.jpg' %}" width="55" height="55" alt="Samarpan Logo" class="mr-2">
+      <span class="brand-text">Samarpan</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="myMenu">
+      <ul class="navbar-nav text-center">
+        <li class="nav-item"><a class="nav-link" href="/login/">Login</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="#home">Home</a></li> -->
+        <li class="nav-item"><a class="nav-link" href="/about/">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="/donor_login/">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact-us/">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin_login/">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Slider -->
+<section id="home">
+  <div id="heroSlider" class="carousel slide carousel-fade" data-ride="carousel">
+    
+    <div class="carousel-inner">
+      
+      <!-- Slide 1 -->
+      <div class="carousel-item active" style="background-image: url('{% static 'images/hero-bg.png' %}');">
+        <div class="overlay"></div>
+        <div class="carousel-caption text-left">
+          <h1 class="display-4 font-weight-bold">Donate <span class="text-warning">4 a better world</span></h1>
+          <p class="lead mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae vestibulum mauris.</p>
+          <a href="{% url 'donate_now' %}" class="btn btn-warning btn-lg mr-2">Donate Now</a>
+          <a href="{% url 'read-more' %}" class="btn btn-outline-light btn-lg">Read More</a>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item" style="background-image: url('{% static 'images/donation-box.jpg' %}');">
+        <div class="overlay"></div>
+        <div class="carousel-caption text-left">
+          <h1 class="display-4 font-weight-bold">Help Someone Today</h1>
+          <p class="lead mt-3">Be a cause of happiness. Every donation makes a difference.</p>
+          <a href="{% url 'donate_now' %}" class="btn btn-warning btn-lg">Donate Now</a>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-item" style="background-image: url('{% static 'images/another-image.jpg' %}');">
+        <div class="overlay"></div>
+        <div class="carousel-caption text-left">
+          <h1 class="display-4 font-weight-bold">Join Our Mission</h1>
+          <p class="lead mt-3">Together we can create a better world for everyone.</p>
+          <a href="{% url 'donate_now' %}" class="btn btn-warning btn-lg">Donate Now</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#heroSlider" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#heroSlider" role="button" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+</section>
+
+<!-- Carousel -->
+<div class="container mt-3 mb-5">
+  <h1 class="text-center text-danger font-weight-bold mb-3" style="font-family: Monotype Corsiva">
+    Our Special Services
+  </h1>
+
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+
+      <!-- First Slide -->
+<div class="carousel-item active">
+  <div class="row justify-content-center">
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+        <img class="card-img-top" src="{% static 'images/books-donation.jpg' %}" alt="Books" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Books Donation</h6>
+          <p class="card-text" style="font-size:16px;">Be a cause of someone's happiness. Donate your old Books.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+        <img class="card-img-top" src="{% static 'images/toys-donation.jpeg' %}" alt="Toys" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Toys Donation</h6>
+          <p class="card-text" style="font-size:16px;">Donate used or new toys to change someone's life.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+
+        <img class="card-img-top" src="{% static 'images/furniture-donation.jpeg' %}" alt="Furniture" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Furniture Donation</h6>
+          <p class="card-text" style="font-size:16px;">Donate your old furniture to needy people.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Second Slide -->
+<div class="carousel-item">
+  <div class="row justify-content-center">
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+        <img class="card-img-top" src="{% static 'images/Clothes Donation.jpg' %}" alt="Clothes" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Clothes Donation</h6>
+          <p class="card-text" style="font-size:16px;">Donate your old clothes to needy people.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+        <img class="card-img-top" src="{% static 'images/Footwear Donation.jpeg' %}" alt="Footwear" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Footwear Donation</h6>
+          <p class="card-text" style="font-size:16px;">Donate used or new footwear to change someone's life.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card" style="width: 300px; height: 300px;">
+        <img class="card-img-top" src="{% static 'images/Vessel_Donation.jpg' %}" alt="Vessels" style="width:100%; height:100%; object-fit: cover;">
+        <div class="card-body p-1">
+          <h6 class="card-title text-center mb-1" style="font-size:12px;">Vessel Donation</h6>
+          <p class="card-text" style="font-size:16px;">Donate your old vessels to needy people.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    </div>
+
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+</div>
+<!-- Volunteer Section -->
+<section class="p-5 text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <h4 class="text-success">Best Way To Help Others</h4>
+        <p>Join Us and become part of this good work</p>
+        <a href="{% url 'donate_now' %}" class="btn btn-warning btn-lg mr-2">Donate Now</a>
+      </div>
+      <div class="col-md-6">
+        <h4 class="text-success">Become A Volunteer Today</h4>
+        <p class="text-danger">One of the greatest gifts you can give is your time</p>
+        <a href="{% url 'donate_now' %}" class="btn btn-primary">Become Volunteer »</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="p-5 bg-light text-center">
+  <div class="container">
+    <h4 class="text-danger">Contact Us</h4>
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <p><strong>📞 Contact</strong><br>+91 0000007972</p>
+      </div>
+      <div class="col-md-3">
+        <p><strong>📧 Send Mail</strong><br>24mca116@charusat.edu.in</p>
+      </div>
+      <div class="col-md-3">
+        <p><strong>🏢 Office Address</strong><br>Charusat CMPICA</p>
+      </div>
+      <div class="col-md-3">
+        <p><strong>🕘 Office Hours</strong><br>9:00 AM to 7:00 PM</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center p-3 bg-dark text-white">
+  © 2026 SAMARPAN
+</footer>
+<!-- Chatbot Floating Button -->
+<a href="/chatbot/" class="chatbot-btn">
+  <img src="{% static 'images/chatbot.png' %}" alt="Chatbot">
+</a>
+
+<style>
+.chatbot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.chatbot-btn img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.chatbot-btn img:hover {
+    transform: scale(1.1);
+}
+</style>
+</body>
+</html>     
