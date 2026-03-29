@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family:Inter,sans-serif; background:#f4f7fe; margin:0; }
+.container { max-width:500px; margin:auto; padding:40px 20px; background:#fff; border-radius:16px; margin-top:50px; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
+h2 { color:#2563eb; margin-bottom:20px; text-align:center; }
+form { display:flex; flex-direction:column; gap:15px; }
+input, select { padding:10px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; }
+button { padding:10px; background:#2563eb; color:#fff; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+button:hover { background:#1e40af; }
+.message { margin-bottom:15px; padding:10px 15px; border-radius:8px; }
+.success { background:#22c55e; color:#fff; }
+.error { background:#f87171; color:#fff; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>New Booking</h2>
+
+<!-- Messages -->
+{% if messages %}
+  {% for msg in messages %}
+    <div class="message {% if msg.tags %}{{ msg.tags }}{% endif %}">{{ msg }}</div>
+  {% endfor %}
+{% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+  <select name="service" required>
+    <option value="">Select Service</option>
+    {% for s in services %}
+      <option value="{{ s.id }}">{{ s.title }}</option>
+    {% endfor %}
+  </select>
+  <input type="date" name="booking_date" required>
+  <input type="time" name="booking_time" required>
+  <button type="submit">Book Service</button>
+</form>
+</div>
+</body>
+</html>

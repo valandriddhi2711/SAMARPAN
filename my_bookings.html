@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Bookings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family:Inter,sans-serif; background:#f4f7fe; margin:0; }
+.container { max-width:900px; margin:auto; padding:40px 20px; }
+h1 { text-align:center; color:#2563eb; margin-bottom:30px; }
+table { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
+th, td { padding:12px; text-align:left; border-bottom:1px solid #e5e7eb; }
+th { background:#f3f4f6; color:#111827; }
+.status-pending { color:#facc15; font-weight:bold; }
+.status-confirmed { color:#22c55e; font-weight:bold; }
+.message { margin-bottom:15px; padding:10px 15px; border-radius:8px; }
+.success { background:#22c55e; color:#fff; }
+.error { background:#f87171; color:#fff; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>My Bookings</h1>
+
+<!-- Messages -->
+{% if messages %}
+  {% for msg in messages %}
+    <div class="message {% if msg.tags %}{{ msg.tags }}{% endif %}">{{ msg }}</div>
+  {% endfor %}
+{% endif %}
+
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in bookings %}
+    <tr>
+      <td>{{ b.service.title }}</td>
+      <td>{{ b.booking_date }}</td>
+      <td>{{ b.booking_time }}</td>
+      <td class="status-{{ b.status }}">{{ b.status|capfirst }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4">No bookings found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</body>
+</html>

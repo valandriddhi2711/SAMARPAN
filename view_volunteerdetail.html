@@ -1,0 +1,114 @@
+{% extends 'admin_base.html' %}
+
+{% block main %}
+
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">
+            View Volunteer Details
+        </h5>
+
+        <div class="container-fluid">
+            <table class="table table-bordered">
+
+                <tr align="center">
+                    <td colspan="4" style="font-size: 20px; color: red;">
+                        Volunteer Details
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Volunteer Name</th>
+                    <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
+                    <th>Contact</th>
+                    <td>{{ volunteer.Contact }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ volunteer.user.email }}</td>
+                    <th>Registration Date</th>
+                    <td>{{ volunteer.regdate }}</td>
+                </tr>
+
+                <tr>
+                    <th>Volunteer Photo</th>
+                    <td>
+                        <img src="{{ volunteer.userpic.url }}" width="60" height="60">
+                    </td>
+                    <th>ID Proof</th>
+                    <td>
+                        <img src="{{ volunteer.idpic.url }}" width="60" height="60">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Address</th>
+                    <td colspan="3">{{ volunteer.address }}</td>
+                </tr>
+
+                {% if volunteer.status == "pending" %}
+                <form method="post">
+                    {% csrf_token %}
+
+                    <tr>
+                        <th>Status</th>
+                        <td colspan="3">
+                            <select name="status" class="form-control" required>
+                                <option value="accepted">Accept</option>
+                                <option value="rejected">Reject</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Admin Remark</th>
+                        <td colspan="3">
+                            <textarea name="adminremark" class="form-control" required></textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" align="center">
+                            <button type="submit" class="btn btn-primary">
+                                Update Status
+                            </button>
+                        </td>
+                    </tr>
+                </form>
+
+                {% else %}
+                <tr>
+                    <th>Status</th>
+                    <td style="text-transform: capitalize;">
+                        {{ volunteer.status }}
+                    </td>
+                    <th>Updated On</th>
+                    <td>{{ volunteer.updationdate }}</td>
+                </tr>
+
+                <tr>
+                    <th>Admin Remark</th>
+                    <td colspan="3">{{ volunteer.adminremark }}</td>
+                </tr>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert("Status updated successfully!");
+    window.location = "{% url 'view_volunteerdetail' volunteer.id %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something went wrong. Please try again.");
+</script>
+{% endif %}
+
+{% endblock %}

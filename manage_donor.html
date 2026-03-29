@@ -1,0 +1,54 @@
+{% extends 'admin_base.html' %}
+
+{% block main %}
+
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">
+            Manage Donor
+        </h5>
+
+        <div class="container-fluid">
+            <table id="example" class="table table-bordered">
+                
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Donor Name</th>
+                        <th>Email ID</th>
+                        <th>Contact No</th>
+                        <th>Reg. Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i in donor %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.user.first_name }}{{i.user.last_name}}</td>
+                        <td>{{ i.user.username }}
+                            <td>{{ i.contact }}
+                        <td>{{ i.regdate }}</td>
+                        <td>
+                            <a href="{% url 'view_donordetail' i.id %}" class="text-primary">
+                                View Details
+                            </a>
+                            
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No pending donations found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

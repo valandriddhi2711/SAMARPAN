@@ -1,0 +1,55 @@
+{% extends 'donor_base.html' %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center text-white mb-4">Contact Us</h1>
+    <p class="text-center text-light mb-5">Have questions or feedback? Send us a message!</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow p-4">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+
+                <!-- Name -->
+                <div class="col-sm-6 mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="col-sm-6 mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required>
+                </div>
+
+                <!-- Subject -->
+                <div class="col-sm-12 mb-3">
+                    <label for="subject">Subject</label>
+                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required>
+                </div>
+
+                <!-- Message -->
+                <div class="col-sm-12 mb-3">
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" rows="5" class="form-control" placeholder="Your message..." required></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary px-4">Send Message</button>
+        </form>
+    </div>
+
+    <div class="mt-5 text-center text-light">
+        <p><i class="fa-solid fa-phone"></i> +91 ********72</p>
+        <p><i class="fa-solid fa-envelope"></i> Samarpan@gmail.com</p>
+        <p><i class="fa-solid fa-location-dot"></i> Charusat University, Change City</p>
+    </div>
+</div>
+{% endblock %}

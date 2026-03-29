@@ -1,0 +1,148 @@
+{% extends 'admin_base.html' %}
+
+{% block main %}
+
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">View Donation Details</h5>
+
+        <div class="container-fluid">
+            <table class="table table-bordered">
+
+                <!-- Donor Details -->
+                <tr align="center">
+                    <td colspan="4" style="font-size: 20px; color: red;">Donor Details</td>
+                </tr>
+
+                <tr>
+                    <th>Donor Name</th>
+                    <td>{{ donation.donor.user.first_name }} {{ donation.donor.user.last_name }}</td>
+                    <th>Donor Contact</th>
+                    <td>{{ donation.donor.Contact }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ donation.donor.user.username }}</td>
+                    <th>Donor PIC</th>
+                    <td>
+                        {% if donation.donor.userpic %}
+                        <img src="{{ donation.donor.userpic.url }}" width="50" height="50">
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <!-- Donation Details -->
+                <tr align="center">
+                    <td colspan="4" style="font-size: 20px; color: red;">Donation Details</td>
+                </tr>
+
+                <tr>
+                    <th>Donation Name</th>
+                    <td>{{ donation.donationname }}</td>
+                    <th>Donation PIC</th>
+                    <td>
+                        {% if donation.donationpic %}
+                        <img src="{{ donation.donationpic.url }}" width="50" height="50">
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Collection Location</th>
+                    <td>{{ donation.collectionloc }}</td>
+                    <th>Donation Date</th>
+                    <td>{{ donation.donationdate }}</td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+                    <td style="text-transform: capitalize;">{{ donation.status }}</td>
+                    <th>Update Date</th>
+                    <td>{{ donation.updationdate }}</td>
+                </tr>
+
+                <tr>
+                    <th>Admin Remark</th>
+                    <td colspan="3">{{ donation.adminremark }}</td>
+                </tr>
+
+                {% if not donation.volunteer %}
+                <form method="post">
+                    {% csrf_token %}
+                    <tr>
+    <th>Select Donation Distribution Area</th>
+    <td colspan="3">
+        <select name="donationareaid" class="form-control" required>
+            {% for area in donationarea %}
+                <option value="{{ area.id }}" {% if donation.donationarea and donation.donationarea.id == area.id %}selected{% endif %}>
+                    {{ area.areaname }}
+                </option>
+            {% endfor %}
+        </select>
+    </td>
+</tr>
+                    <tr>
+                        <th>Select Volunteer</th>
+                        <td colspan="3">
+                            <select name="volunteerid" class="form-control" required>
+                                {% for vol in volunteer %}
+                                <option value="{{ vol.id }}">
+                                    {{ vol.user.username }} [{{ vol.user.first_name }} {{ vol.user.last_name }}]
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button type="submit" class="btn btn-primary">
+                                Assign Volunteer
+                            </button>
+                        </td>
+                    </tr>
+                </form>
+                {% else %}
+                <tr>
+                    <th>Donation Area</th>
+                    <td>{{ donation.donationarea.areaname }}</td>
+                    <th>Volunteer</th>
+                    <td>
+                        {{ donation.volunteer.user.username }} [{{ donation.volunteer.user.first_name }} {{ donation.volunteer.user.last_name }}]
+                    </td>
+                </tr>
+                <tr>
+                    <th>Volunteer Remark</th>
+                    <td colspan="3">
+                        {% if donation.volunteerremark %}
+                            {{ donation.volunteerremark }}
+                        {% else %}
+                            Not updated yet
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Volunteer allocated successfully');
+    window.location = "{% url 'accepted_donationdetail' donation.id %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Something went wrong, please try again...');
+</script>
+{% endif %}
+
+{% endblock %}
